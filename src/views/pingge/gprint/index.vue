@@ -1,7 +1,7 @@
 <template>
   <div class="gprint">
     <div>
-      <h>当前连接状态：{{ currentDeviceName }}</h>
+      <h1>当前连接状态：{{ currentDeviceName }}</h1>
     </div>
     <el-button type="primary" @click="init">初始化</el-button>
     <el-button type="success" @click="start">点击搜索蓝牙</el-button>
@@ -319,6 +319,7 @@ export default {
       this.$router.push("/scan");
     },
   },
+  mounted() {},
 };
 </script>
 <style scoped>
