@@ -1,60 +1,73 @@
 <template>
-  <el-card>
-    <div slot="header" style="text-align: center">
-      <h1>平哥食品</h1>
+  <div>
+    <!-- <headNavBar title="打印模版" backUrl="/"> </headNavBar> -->
+    <!-- <printerConfig @onLabelSelected="handleTabChange" ref="printer" /> -->
+    <printer :printStr="targetStr" />
+    <div class="qrcodes" style="margin-top: 20px">
+      <van-tabs v-model="activeTab" @click="onTabClick">
+        <van-tab title="物料标签" name="supply-tab">
+          <supplyQRCode ref="supply" />
+        </van-tab>
+        <van-tab title="成品标签" name="stock-tab">
+          <stockQRCode ref="stock" />
+        </van-tab>
+      </van-tabs>
     </div>
-    <table class="pingge-table">
-      <tr>
-        <th>物料编码</th>
-        <td width="25%"></td>
-        <th>物料名称</th>
-        <td width="25%"></td>
-      </tr>
-      <tr>
-        <th>物料规格</th>
-        <td width="25%"></td>
-        <th>数量</th>
-        <td width="25%"></td>
-      </tr>
-      <tr>
-        <th>生产日期</th>
-        <td width="25%"></td>
-        <th>入库日期</th>
-        <td width="25%"></td>
-      </tr>
-      <tr>
-        <th scope="row">生产厂家</th>
-        <td></td>
-      </tr>
-      <tr>
-        <th scope="row">供应商</th>
-        <td></td>
-      </tr>
-    </table>
-  </el-card>
+  </div>
 </template>
 <script>
+// import { jpPrinter } from "@/views/pingge/utilities/sPrint/printer/tsc.js";
+import printer from "../gprint/index";
+import supplyQRCode from "./supplyQRCode";
+import stockQRCode from "./stockQRCode";
+import { Toast } from "vant";
+
 export default {
+  name: "sPrint",
+  components: {
+    stockQRCode,
+    supplyQRCode,
+    printer,
+  },
   data() {
     return {
-      tableData: [],
+      activeTab: "supply-tab",
+      targetStr: "",
     };
   },
-  activated() {
-    console.log(wx);
+  methods: {
+    // handleTabChange(label) {
+    //   Toast(`已选择: ${label}`);
+    //   if (label === "物料标签") {
+    //     this.activeTab = "supply-tab";
+    //     this.$nextTick(() => {
+    //       console.log(this.$refs.supply.tableData);
+    //       this.$refs.printer.targetString = JSON.stringify(
+    //         this.$refs.supply.tableData
+    //       );
+    //     });
+    //   } else {
+    //     this.activeTab = "stock-tab";
+    //     this.$nextTick(() => {
+    //       console.log(Object.values(this.$refs.stock.query));
+    //       this.$refs.printer.targetString = JSON.stringify(
+    //         Object.values(this.$refs.stock.query)
+    //       );
+    //     });
+    //   }
+    // },
+    onTabClick(name, title) {
+      Toast(`已选择: ${title}`);
+      this.$nextTick(() => {
+        this.targetStr = JSON.stringify(
+          title === "物料标签"
+            ? this.$refs.supply.tableData
+            : Object.values(this.$refs.stock.query)
+        );
+        console.log(this.targetStr);
+      });
+    },
   },
+  mounted() {},
 };
-</script>
-<style scoped>
-.pingge-table {
-  border: 1px solid black;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.pingge-table th,
-td {
-  border: 1px solid black;
-  text-align: center;
-}
-</style>>
+</script>J

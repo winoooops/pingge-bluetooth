@@ -5,8 +5,8 @@ Vue.use(Router)
 
 const routes = [
   { path: '/', redirect: '/gprint' },
-  { path: '/gprint', component: () => import('@/views/pingge/gprint/index') },
-  { path: '/scan', component: () => import('@/views/pingge/QRCode/index') }
+  // { path: '/gprint', component: () => import('@/views/pingge/gprint/index') },
+  { path: '/gprint', component: () => import('@/views/pingge/QRCode/index') }
 ]
 
 export default new Router({
