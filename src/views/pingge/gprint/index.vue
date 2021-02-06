@@ -125,7 +125,9 @@ export default {
           });
         },
         fail: (res) => {
-          alert("连接失败");
+          alert(JSON.stringify(res.errMsg));
+          console.log(res);
+          this.loading = false;
         },
       });
     },
@@ -291,8 +293,8 @@ export default {
       command.setSize(100, 100);
       command.setGap(2);
       command.setCls();
-      // command.setText(80, 350, "TSS24.BF2", 3, 3, this.printText);
-      command.setQR(20, 20, "L", 4, "A", 0, this.printStr);
+      command.setText(80, 350, "TSS24.BF2", 3, 3, this.$props.printStr);
+      command.setQR(20, 20, "L", 10, "A", 0, this.$props.printStr);
       command.setPagePrint();
       var uint8Buf = Array.from(command.getData());
       function split_array(datas, size) {
